@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>claude-usage</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="glow"></div>
+
+<header class="top">
+  <div class="brand">
+    <span class="dot"></span>
+    <div>
+      <h1>claude-usage</h1>
+      <p id="meta">—</p>
+    </div>
+  </div>
+  <div class="actions">
+    <span class="live" id="live"><i></i> live</span>
+    <button class="btn" id="refresh" title="Перечитать JSONL">Обновить</button>
+    <button class="btn icon" id="settings" title="Настройки">⚙</button>
+  </div>
+</header>
+
+<main>
+  <section id="windows" class="windows"></section>
+
+  <section class="panel chart-panel">
+    <div class="panel-head">
+      <h2>Расход по времени</h2>
+      <div class="tabs" id="chart-tabs">
+        <button class="tab active" data-range="hour">24 часа</button>
+        <button class="tab" data-range="day">14 дней</button>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i class="sw read"></i>cache read</span>
+      <span><i class="sw write"></i>cache write</span>
+      <span><i class="sw io"></i>input + output</span>
+      <span class="legend-note" id="chart-note"></span>
+    </div>
+    <div class="chart" id="chart"></div>
+    <div class="axis" id="axis"></div>
+  </section>
+
+  <section class="grid3">
+    <div class="panel">
+      <div class="panel-head"><h2>Модели</h2><span class="sub">7 дней</span></div>
+      <div class="rows" id="models"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Проекты</h2><span class="sub">7 дней</span></div>
+      <div class="rows" id="projects"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Сессии</h2><span class="sub">14 дней</span></div>
+      <div class="rows clickable" id="sessions"></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>данные: транскрипты Claude Code · оценка лимитов локальная, не официальная</span>
+    <span id="dbstat"></span>
+  </footer>
+</main>
+
+<div class="modal" id="modal-session" hidden>
+  <div class="modal-card wide">
+    <div class="modal-head">
+      <h3 id="s-title">Сессия</h3>
+      <button class="btn icon" data-close>×</button>
+    </div>
+    <p class="muted" id="s-meta"></p>
+    <div id="s-body" class="s-body"></div>
+  </div>
+</div>
+
+<div class="modal" id="modal-settings" hidden>
+  <div class="modal-card wide">
+    <div class="modal-head">
+      <h3>Настройки</h3>
+      <button class="btn icon" data-close>×</button>
+    </div>
+    <p class="muted">
+      Лимиты считаются в «единицах» — токены, умноженные на веса. Официальные лимиты
+      Claude подбираются под твой план: впиши сюда свои значения, чтобы полоски были осмысленными.
+    </p>
+
+    <h4>Лимиты</h4>
+    <div id="cfg-limits" class="cfg-limits"></div>
+
+    <h4>Веса токенов</h4>
+    <div id="cfg-weights" class="cfg-grid"></div>
+
+    <h4>Цены, $ за 1M токенов</h4>
+    <div id="cfg-prices" class="prices"></div>
+
+    <div class="modal-foot">
+      <span class="err" id="cfg-err"></span>
+      <button class="btn primary" id="cfg-save">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

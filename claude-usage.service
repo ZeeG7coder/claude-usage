@@ -1,0 +1,13 @@
+[Unit]
+Description=claude-usage — локальная статистика токенов Claude Code
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/Projects/claude-usage
+ExecStart=/usr/bin/python3 %h/Projects/claude-usage/server.py --no-open --port 8787
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target
